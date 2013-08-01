@@ -1,0 +1,35 @@
+
+
+var require = (function () {
+
+    // Keep a cache of already fetched modules.
+    var cache = {};
+
+    return function (moduleName) {
+        // Check the cache.
+        if (moduleName in cache) {
+            return cache[moduleName];
+        }
+
+        // Not found in cache. Fetch and
+        // load the module synchronously.
+        var request = new XMLHttpRequest();
+
+        // Make a synchronous request for the module file.
+        request.open('GET', moduleName + '.js', false);
+
+        request.onload = function () {
+            var code = request.responseText;
+			//debugger;
+			var moduleObject = eval('(function () { var exports = {};\n\n' + code + '\n\nreturn exports; })()');
+			
+            cache[moduleName] = moduleObject;
+        }
+
+        request.send();
+        return cache[moduleName];
+    }
+})();
+
+// Just load the other modules.
+//var accmp = require('accompaniment');

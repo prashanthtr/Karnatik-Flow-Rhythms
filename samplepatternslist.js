@@ -1,0 +1,166 @@
+/*
+ var mridangamSol = [
+
+//     [ ["num","dheem",".","num","num","dheem",".","num","num","dheem",".","num","num","dheem",".","num",], [0,0,4], [1,9]],    
+
+//     [ ["num","dheem","dheem","dheem","num","dheem","dheem","dheem","num","dheem","dheem","dheem","num","dheem","dheem","dheem"], [0,0,4], [1]],    
+
+     [ ["num",".","dheem",".","num",".","dheem","."], [0,0,4], [1]],    
+];
+
+ var kanjiraSol = [ 
+     
+     [["tum",".","tum","ta","te","ta","tum","tum","ta",],[3,0.25,8]],
+     
+     //[["tum",".","tum","ta","te","ta","te","tum","tum","ta",],[3,0.5,8]],
+     
+     [["ta",".", "tum",".","ta",".", "tum",".",],[0,0,4]],
+
+     [["ta","tum",".","ta","ta","tum",".","ta",],[0,0,4]],
+
+ ];*/
+ 
+ 
+ var mridangamSol = [ 
+
+	[ ["clap",".",".",".","clap",".",".",".","clap",".",".",".","clap",".",".","."], [0,0,4], []],    
+	
+    /*[ ["num","dheem","dheem","dheem","num","dheem","dheem","dheem","num","dheem","dheem","dheem","num","dheem","dheem","dheem"], [0,0,4], [1,5,9,13]],    
+
+    [ ["num","dheem","dheem","dheem","num","dheem","dheem","dheem","num","dheem","dheem","dheem","num","dheem","dheem","dheem"], [0,0,4], [1,5,9,13]],   
+
+   [ ["num","thi","num","dheem","num","thi","num","dheem","num","thi","num","dheem","num","thi","num","dheem"], [0,0,4], [1,3,7,9,11,15]],
+
+    [ ["num","thi","num","dheem","num","thi","num","dheem","num","thi","num","dheem","num","dheem","dheem","thi","ri","tha","thi"], [15,0.25,16], [1,3,7,9,11,15]],
+
+    [ ["dheem",".","tha","ri","num","dheem",".","num","num","dheem","num","num","num","dheem",".","thi","num","dheem"], [0,0.5,8], [1,3,7,9,11,12,14]],    
+
+    [ ["dheem","dheem","num","dheem","num","thi","num","dheem","num","num","num","dheem",".","thi","num","thi","ri","tha","thi"], [15,0.25,16], [1,3,7,9,11,12,14]],    
+    
+    [ ["num","dheem","num","dheem",".","num","num","dheem","num","dheem","num","dheem",".","num","num","dheem"], [0,0,4], [1,3,6,7,9,11,13,14]],
+    
+    [ ["num","dheem","num","dheem",".","num","num","dheem","num","dheem","num","dheem","num","num","num","thi","ri","tha","thi"], [15,0.25,16], [1,3,6,7,9,11,13,14]],*/
+
+ ];
+
+
+//check distance calculation when ts chagnes
+
+var kanjiraSol = [
+
+
+    //plain
+    
+	//[ ["tum",".",".",".","tum",".",".",".","tum",".",".",".","tum",".",".","."], [0,0,4],],    
+//	[ ["tum",".","tum","ta","ta","tum","tum","ta","tum",".","ta","te","ta","ta","tum","tum","ta"], [11,0.5,6] ],    
+
+    [["tum",".","tum","ta","ta","tum","tum","ta","tum",".","tum","ta","ta","tum","tum","ta"],[0,0,4]],
+
+    [ ["tum",".","tum","ta","ta","tum","tum","ta","tum",".","tum","ta","te","ta","tum","tum","ta"], [11,0.25,8] ],    
+        
+    [["ta","tum","tum","ta","ta","tum","tum","ta","ta","tum","tum","ta","ta","tum","tum","ta",], [0,0,4]],
+    
+    [["ta","tum","tum","ta","ta","tum","tum","ta","ta","tum","tum","ta","ta","tum","tum","ta","te",], [15,0.25,8]],
+    
+    [["ta","tum",".","ta","ta","tum",".","ta","ta","tum",".","ta","ta","tum",".","tha"], [0,0,4]],
+    
+    [["ta","tum",".","ta","ta","tum",".","ta","ta","tum",".","ta","ta","tum",".","tha"], [0,0,4]],
+    
+    [["tum","ta","tum","tum","ta","tum","tum","ta","tum","ta","tum","tum","ta","tum","tum","ta"], [0,0,4]], 
+    
+    [["tum","ta","tum","tum","ta","tum","tum","ta","tum","ta","tum","tum","ta","tum","tum","ta","te","ta","te"], [15,0.25,16]], 
+	
+	
+    //1 aksharam -- nadai change -- front and back
+
+    [["ta","te","ta","tum","ta","te","ta","te","ta","tum","tum","ta","ta","tum","tum","ta","ta","tum","tum","ta"], [0,1,8]],
+    
+    [["ta","te","ta","tum","ta","te","ta","te","ta","tum","tum","ta","ta","tum","tum","ta","ta","tum","tum","ta"], [0,1,8]],
+    
+    [["tum",".","tum","ta","ta","tum","tum","ta","ta","tum",".","ta","te","ta","te","ta","tum","ta","te","ta","te"], [11,1.25,8] ],
+    
+    [["tum",".","tum","ta","ta","tum","tum","ta","ta","tum",".","ta","te","ta","te","ta","tum","ta","te","ta","te"], [11,1.25,8] ],
+    
+    [["tum",".","tum","ta",".","tum","tum","ta","tum","ta","tum","ta","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te"], [12,1,16] ],
+    
+    [["tum",".","tum","ta",".","tum","tum","ta","tum","ta","tum","ta","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te"], [12,1,16] ],
+    
+    [["tum",".","tum","ta","ta","tum","tum","ta","ta","tum",".","ta","tum","ta","te","ta","tum",".","te","ta","te","ta","te","ta"] , [12,1,12] ],
+
+    [["tum",".","tum","ta","ta","tum","tum","ta","ta","tum",".","ta","tum","ta","te","ta","tum",".","te","ta","te","ta","te","ta"] , [12,1,12] ], 
+
+  //2 aksharam -- nadai change -- front and back    
+       
+    
+  [["ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te","tum",".","tum","ta","ta","tum","tum","ta"],[0,2,8]],    
+
+    [["ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te","tum",".","tum","ta","ta","tum","tum","ta"],[0,2,8]],    
+    
+    [	["ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te","ta",".",".",".","tum",".",".",".","tum",".",".",".","ta",".",".",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te","ta",".",".",".","tum",".",".",".","tum",".",".",".","ta",".",".","."], [0,4,16] ],
+
+    [	["ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te","ta",".",".",".","tum",".",".",".","tum",".",".",".","ta",".",".",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te","ta",".",".",".","tum",".",".",".","tum",".",".",".","ta",".",".","."], [0,4,16] ],
+    
+    [ ["tum",".","tum","ta","ta","tum","tum","ta","tum",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","tum",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te"],[8,2,14]],
+    
+    [ ["tum",".","tum","ta","ta","tum","tum","ta","tum",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","tum",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te"],[8,2,14]],
+    
+    [ ["ta","tum","tum","ta","ta","tum","tum","ta","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","tum",".","ta","te","ta","te"], [8,2,18] ],
+
+    [ ["ta","tum","tum","ta","ta","tum","tum","ta","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","tum",".","ta","te","ta","te"], [8,2,18] ],
+  	
+
+//3 and 4 aksharam -- nadai change 
+    
+    [["ta","tum","tum","ta","tum",".",".","ta","te","ta","te","tum","tum",".",".","ta","te","ta","te","tum","tum",".",".","ta","te","ta","te","tum"], [4,3,8]],
+    
+    [["ta","tum","tum","ta","tum",".",".","ta","te","ta","te","tum","tum",".",".","ta","te","ta","te","tum","tum",".",".","ta","te","ta","te","tum"], [4,3,8]],
+    
+    [ ["ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te"], [0,4,8] ],
+    
+    [ ["ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","te","ta","tum","ta","te","ta","te"], [0,4,8] ],
+
+    [ ["tum",".",".","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","tum","ta","te","te"], [0,4,6]],  
+
+    [ ["tum",".",".","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","tum","ta","te","te"], [0,4,6]],  
+
+    [ ["ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","tum",".","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","tum",".","ta","te","ta","te"], [0,4,18] ],
+    
+    [ ["ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","tum",".","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","te",".","ta",".","tum",".","ta","te","ta","te","ta","te","ta",".","tum",".","ta","te","ta","te"], [0,4,18] ],
+    
+
+//offbeat
+    
+    [[".",".",".","tum","tum","ta","tum","tum","tum","ta","tum","tum","tum","ta","tum","ta","te","ta","te"], [15,0.25,16]],
+    
+    [	["ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te","ta",".",".",".","tum",".",".",".",".",".",".",".","ta",".",".",".","ta",".",".",".","tum",".",".",".",".",".",".",".","ta",".",".",".","ta","te","ta","te","tum",".","ta","te","ta","te","ta","te","ta","te","ta","te"], [0,4,16] ],	    
+
+    
+    //furren    
+    [["tum",".",".",".",".",".","ta","te","ta","te","ta","te","tum",".",".",".","ta","te","ta","te","ta","te","tum",".",".",".","ta","te","ta","te","ta","te"], [0,4,8]],
+
+    [["tum",".",".",".",".",".","ta","te","ta","te","ta","te","tum",".",".",".","ta","te","ta","te","ta","te","tum",".",".",".","ta","te","ta","te","ta","te"], [0,4,8]],
+    
+    //nadai 
+    
+    [["tum","ta","te","ta","te","ta","tum","ta","te","ta","te","ta","tum",".","ta",".","ta","te","ta","te","tum",".","ta","te","ta","te","tum",".","tum",".","ta","."], [0,4,8] ],      
+
+
+    [["ta",".","te",".","ta",".","tum",".","ta",".","te",".","ta",".","te",".","tum",".","ta",".","ta",".","te",".","ta",".","tum",".","ta","te","ta", "te","ta",".","te",".","ta",".","tum",".","ta",".","te",".","ta",".","te",".","tum",".","ta",".","ta",".","te",".","ta",".","tum",".","ta","te","ta", "te"],  [0,4,16]],
+    
+    //kanakku
+    
+    [[".",".","tum",".",".",".","ta","te","ta","te","tum",".","tum",".",".",".","ta","te","ta","te","tum",".","tum",".",".",".","ta","te","ta","te","tum","."], [0,4,8]],    
+
+    [[".",".","tum",".",".",".","ta","te","ta","te","tum",".","tum",".",".",".","ta","te","ta","te","tum",".","tum",".",".",".","ta","te","ta","te","tum",".",".",".","tum",".",".",".","ta","te","ta","te","tum",".","tum",".",".",".","ta","te","ta","te","tum",".","tum",".",".",".","ta","te","ta","te","tum","."], [0,4,16]], 
+
+
+];
+
+
+
+
+
+
+exports.mSol = mridangamSol;
+exports.kSol = kanjiraSol;
+

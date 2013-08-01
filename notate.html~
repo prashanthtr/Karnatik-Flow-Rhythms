@@ -1,0 +1,17 @@
+
+<html>
+
+<head>
+
+<script src = "patternsList.js" > </script>
+<script src = "notate.js"></script>
+
+</head>
+
+<body>
+
+<canvas id="notation" height="400" width="400"></canvas>
+
+<body>
+
+</html>

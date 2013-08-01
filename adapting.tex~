@@ -1,0 +1,51 @@
+
+
+Are there different kinds of adapting?
+
+when is there a need for a secondary percussionist to adapt
+
+really important:
+
+1) has to stop when the mridangam stops unless mridangam gives a right signal to start playing, has to stop when it detects no input
+
+2) when lead percussionist doubles speed -- secondary adapts with playing at the second tempo
+
+3) many cases, secondary is more of volume changes to same pattern
+
+not so important:
+
+3) when lead plays a variation of the pattern --> the immediate next 8 beats is followed with variation shown by the second --> but 
+
+4) rhythm change in high speed -> adapts accent structure
+
+
+
+tangential question:
+
+how to use model to map what the lead player plays to the secondary based on each note that the lead player plays
+
+
+framework idea:
+
+1) note by note -- which does not happen in concerts
+maps each note played by lead to a secondary using an arbitrary mapping with no basis
+dynamically finds the distance with each acceptable pattern
+
+2) base pattern and variations --> 
+real time recognition of base patterns and having a sense of their variations based on the model distance
+
+
+Adapting seems to be along 2 dimensions:
+
+loudness change -- keeps the same diction but changes accent structure 
+	 -> is that enough for secondary : mostly no -> it is likely to intrude with lead if lead is playing in soft volume
+	 -> 
+
+
+
+speed change -- changes diction
+
+how does the secondary decide its enough to change only the loudness in some cases and in other cases has to change speed --> 
+
+
+

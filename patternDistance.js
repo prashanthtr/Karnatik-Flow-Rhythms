@@ -1,0 +1,221 @@
+
+var utils = require("utilities");
+var modnum = utils.modnum;
+var maxi = utils.maxi;
+var sum = utils.sum;
+var generateBaseValue = utils.generateBaseValue;
+var multiTo1D = utils.multiTo1D;
+
+var strokes = require("patternsList");
+var kanjiraSol = strokes.kSol;
+
+// This is the distance function that computes the differece between mridangam and kanjira. 
+// It takes as the 2 rhythm objects, computes and returns the distance between them.
+
+//stub
+//var sp1 = [4,4,4,4],sp2 = [8,8,8,8], sp3 = [4,4];
+
+//var m = [ [ [], [ [], [sp1, [4,4], [4,4]] ], [] ] , [2.7, 0, 0.4, 0, 0.7, 0, 0.4, 0] ]; 
+//var k = [ [ [], [ [], [sp1, sp2, sp3] ], [] ], [2.4, 0, 0.4, 0, 0.2, 0.5, 0.2, 0.5, 0.4, 0.5] ] ;
+
+var patternDistance = function(mr, kan, i){
+
+//weighted array and speed arrray for both mridangam and kanjira
+
+//debugger;
+
+var mWeights = mr[0];
+var kWeights = kan[0];
+var pDur = 16; //getEle("pDur");
+
+var mSpeed = mr[1]; //3 arrays for the different speeds played in the pattern
+var kSpeed = kan[1]; //3 arrays for the different speeds played in the pattern
+
+var d = distance( mSpeed[0].length, mSpeed[1].length, mSpeed[2].length, mSpeed[1][0] || 4,  kSpeed[0].length, kSpeed[1].length, kSpeed[2].length, kSpeed[1][0] || 4);
+
+console.log("pattern " + i + '\t' + kanjiraSol[i][1][1] + '\t' + kanjiraSol[i][1][2] + '\t' + d[0]);
+    console.log(" ");
+    console.log(" ");
+localStorage.setItem("pattern" + i, "[" + kanjiraSol[i][1].join(" ") + "]" + "       " + d[0]);
+//+ '\t' + kanjiraSol[i][0].join(" ") + '\t' + d[1].join("") + '\t' 
+return d[0];
+
+function distance( ml1, ml2, ml3, mSpeed1 , kl1, kl2, kl3, kSpeed1){ //mSpeed and kSpeed are the speeds in the section when tempo change occurs
+	
+	var arr12 = [], arr22 = [], d1 = 0, d2 = 0, d3 = 0;
+	if( mSpeed1 == kSpeed1){ //both mridangam and kanjira play at same tempos at same locations, trivial case
+		d1 = calcDistance( mWeights, kWeights);	
+		//arr12 = arr[0];
+		//arr22 = arr[1];
+	}
+	else if( mSpeed1 != kSpeed1){ //assuming only the kanjira varies ( between kl1 and kl3)
+
+		//debugger;
+		var d1 = calcDistance( mWeights.slice(0, kl1), kWeights.slice(0, kl1)); 
+		var d2 = calcDistance( mWeights.slice( mWeights.length - kl3, mWeights.length), kWeights.splice(kl1 + kl2, kl1 + kl2 + kl3));
+
+		var d3 = calcDistance( mWeights.slice( kl1, kl1 + mWeights.length - kl1 - kl3), kWeights.slice( kl1, kl1 + kl2)); // tempo change portion intbetween
+		
+		//arr12 = multiTo1D([d1[0],d3[0],d2[0]]);
+		//arr22 = multiTo1D([d1[1],d3[1],d2[1]]);
+	}
+	
+	// create accent array
+	//var acc1 = createAccent( arr12);
+	//var acc2 = createAccent( arr22);
+	acc2 = [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0];
+/*
+	//compute distance
+	var diff = arr12.map(function(s,index){
+    	return  Math.abs(s - arr22[index]); //arr2 - s to note that kanjira playing more strokes escalates value
+    	//Math.abs(acc1[index]-acc2[index])
+    });*/
+    
+    var dist = d1 + d2 + d3;
+    //console.log(dist);
+    return [dist,acc2];
+
+	
+	
+//Computes the dsitance between 2 weight arrays that contain the weight of the strokes played by mridangam and kanjira
+
+	function calcDistance ( arr1, arr2){
+	var arr11 = [], arr22 = []; 
+	var actualDuration = pDur - kl1 - kl3;
+
+	if( arr1.length != arr2.length){  
+	
+		
+		// Arrays have to be normalized to to the same length in order to find the distance
+		
+		var lcm = utils.findLcm (mSpeed1, kSpeed1);
+		lcm = lcm * (actualDuration / 4 ); //number of beat to expand to
+		arr11 = utils.generateBaseValue( lcm , 0); //arrays of common length
+		arr21 = utils.generateBaseValue( lcm , 0); 
+		
+		//assign original array to the expanded length
+		expand( arr1, arr11, lcm / arr1.length ); //since speeds are given for four beats
+		expand( arr2, arr21, lcm / arr2.length );
+
+		//distance calculated from expanded array itself
+		arr12 = arr11;
+		arr22 = arr21;
+
+		//compress original arrays to actual duration of the change in the original time scale
+		/*var arr12 = generateBaseValue( actualDuration , 0);
+		var arr22 = generateBaseValue( actualDuration , 0);
+		compress( arr11, arr12, lcm / actualDuration); 		
+		compress( arr21, arr22, lcm / actualDuration); 		*/
+		
+	}
+	else{	
+		//assign new arrays to old arrays
+		arr12 = arr1;
+		arr22 = arr2;
+	}
+	
+	/*This is a decision point -- This function could only return
+	the weights and the main function computes the accent structure
+	and the distance. A different way of doing it is to create the
+	accent structure then and there and return the distance to the
+	main function only. THe next section of the code could be in main
+	distance function also.
+	*/	
+	
+	if( arr12.length == 0 && arr22.length ==0){
+		return 0;
+	}
+	
+		//compute distance
+	var diff = arr12.map(function(s,index){
+    	return  Math.abs(s - arr22[index]); //arr2 - s to note that kanjira playing more strokes escalates value
+    	//Math.abs(acc1[index]-acc2[index])*
+    });
+	
+	//console.log(diff.reduce(sum));
+	//return [arr12, arr22];	
+	return diff.reduce(sum);
+	
+}
+	
+	//expands array1 into array2 using the time signature - t
+	function expand( arr1, arr2, t){
+		var i= 0;
+		while( i < arr1.length){
+			arr2[ i * t] = arr1[i];	
+			i++;
+		}
+	}
+
+    function compress(arr1, arr2, t){
+
+		var i =0, j=0, sum=0;
+		while(i < arr1.length){
+
+	    	sum = 0;
+		    while( (i - j*t) < t){
+				sum+= arr1[i];
+				i++;
+		    }
+		    arr2[j] = sum;
+		    j++;
+
+		};
+	}
+
+
+function createAccent( fAccent){
+
+    var w1 = utils.getEle("backWeight"), w2 = utils.getEle("frontWeight");
+	var duration = fAccent.length;
+	var contrastedArr = fAccent.map(function(s,index,arr){
+	    if(index == 0){
+		return 1*s - w2*arr[(index+1)%duration] - w1*arr[modnum(duration,index,1)] + utils.getEle("clap");
+	    }
+	    if (index == duration - 1){//last beat
+		return 1*s - w1*arr[modnum(duration,index,1)] - w2* utils.getEle("clap");
+	    }
+	    else return 1*s - w1*arr[modnum(duration,index,1)] - w2*arr[(index+1)%duration];
+	});   
+	
+	
+    var accentStruct = contrastedArr.map(function(s,index,arr){
+	    
+	    if( index == 0){
+		if( s > arr[index+1]){
+		    return 1;
+		}
+		else return 0;
+	    }
+	    else if( index == duration - 1){
+		if( s > arr[index-1]){
+		    return 1;
+		}
+		else return 0;
+	    }
+	    else{
+		var max = maxi(s,arr[modnum(duration,index,1)],arr[(index+1)%duration]);
+		if( max != -1 && max == s && s!=0){
+		    return 1;
+		}
+		else{
+		    return 0;
+		}
+	    }
+	    
+	});
+
+   	console.log(accentStruct);
+	return accentStruct;	
+
+}
+
+
+}
+
+}
+
+//console.log(patternDistance( m, k ));
+exports.patternDistance = patternDistance;
+
+
