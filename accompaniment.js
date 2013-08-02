@@ -1,8 +1,6 @@
  
- 
- 
- var mSol = [], pDur = 16;
- var play = require("play");
+var mSol = [], pDur = 16;
+var play = require("play");
  
 var AC = play.audioContext;
 var sh = play.scheduler;
@@ -10,8 +8,8 @@ var gain = play.gainNode;
 var playAcc = play.playAcc; 
 
 
-document.onkeypress = play.keyPress;
-var mridangamKey = document.onkeypress;
+//document.onkeypress = play.keyPress;
+//var mridangamKey = document.onkeypress;
 
 document.getElementById('tempo').addEventListener( "change", function(){		
 		tempo = document.getElementById("tempo").value;
@@ -56,17 +54,39 @@ document.getElementById("resume").addEventListener("click",function(){
 },true);
 
 
+document.onkeypress = function (e){
+    debugger;
+    var stroke = mapMridangamKey(String.fromCharCode(e.keyCode));
+    var time = e.timeStamp;
+    play.selectStroke( stroke, time);	
+    
+    function mapMridangamKey( str){
+    	if(str == "a"){
+		return "num";
+    	}
+	else if( str == "k"){
+    	    return "dheem";
+    	}
+    	else return ".";
+    }	
+    
+}
+
+
 function playKanjira(){
     sh.running = true; 
     gain.connect(AC.destination);    
-    var dur = 300 * (60/tempo);
+    //var dur = 300 * (60/tempo);
     //var song = sh.loop( sh.track ( sounds["jambupathe"].trigger(1.0), sh.delay(dur)));
     //sh.play(song);
-    var mrkey = sh.loop(sh.track( [mridangamKey, sh.delay(60/tempo)]));
-    sh.play(mrkey);
+    
+    //keep looping mridangamkey for everykey
+    //var mrkey = sh.loop(sh.track( [mridangamKey, sh.delay(60/tempo)]));
+
+    play.keyPress();
     //ensure that only what was recently played is sent
     
-    play.playAcc("mridangam", mSol.slice(mSol.length - pDur, mSol.length), [1], [0,0,4]); //triggers the stroked to be played in the output
+    //play.playAcc("mridangam", mSol.slice(mSol.length - pDur, mSol.length), [1], [0,0,4]); //triggers the stroked to be played in the output
     play.playAcc("kanjira", [], [], []);
 }
 
