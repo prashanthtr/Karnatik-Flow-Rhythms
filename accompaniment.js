@@ -7,9 +7,7 @@ var sh = play.scheduler;
 var gain = play.gainNode;
 var playAcc = play.playAcc; 
 
-
-//document.onkeypress = play.keyPress;
-//var mridangamKey = document.onkeypress;
+var input = null;
 
 document.getElementById('tempo').addEventListener( "change", function(){		
 		tempo = document.getElementById("tempo").value;
@@ -21,6 +19,11 @@ var play_pattern = document.getElementById('play');
 play_pattern.addEventListener("click", playKanjira , true);
 
 document.getElementById("stop").addEventListener("click",stop,false);
+
+document.getElementById("Midi").addEventListener("click",function (){
+    window.navigator.requestMIDIAccess().then( success, failure);
+},false);
+
 
 document.getElementById("dump").addEventListener("click",function(){
     var typ = document.getElementById("patType").value;
@@ -53,7 +56,28 @@ document.getElementById("resume").addEventListener("click",function(){
     
 },true);
 
+function onMIDIMessage( event){
+    
+    //midi format -- note on off, velocity, note number
+    //console.log( event.data[0] + " " + event.data[1] + " " + event.data[2] );
+    var stroke = mapMridangamKey(event.data[1]);
+    var velocity = event.data[2];
+    var time = event.timeStamp;
+    play.selectStroke( stroke, velocity, time);	
+    
+    function mapMridangamKey( str){
+    	if(str == "C2"){
+	    return "num";
+    	}
+	else if( str == "B2"){
+    	    return "dheem";
+    	}
+    	else return ".";
+    }	
 
+}
+
+/*
 document.onkeypress = function (e){
     debugger;
     var stroke = mapMridangamKey(String.fromCharCode(e.keyCode));
@@ -70,6 +94,19 @@ document.onkeypress = function (e){
     	else return ".";
     }	
     
+}*/
+
+function success(midiAccess){
+
+    console.log( "MIDI ready!" );		
+    input = midiAccess.inputs( )[4];
+    input.onmidimessage = onMIDIMessage;
+
+}
+
+
+function failure(msg){
+    alert("failure" + msg);
 }
 
 
@@ -87,6 +124,6 @@ function playKanjira(){
     //ensure that only what was recently played is sent
     
     //play.playAcc("mridangam", mSol.slice(mSol.length - pDur, mSol.length), [1], [0,0,4]); //triggers the stroked to be played in the output
-    play.playAcc("kanjira", [], [], []);
+    //play.playAcc("kanjira", [], [], []);
 }
 
