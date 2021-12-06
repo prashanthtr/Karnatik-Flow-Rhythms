@@ -1,3 +1,3 @@
 # autoaccompaniment
 
-Real-time automatic rhythm accompaniment response for Carnatic music.
+An experiment with use of Flow rhythms in Carnatic music for real-time automatic rhythm accompaniment.
